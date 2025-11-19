@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres-db-jpa
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypass
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Backend - AHORA SOLO ACCESIBLE INTERNAMENTE
+  backend:
+    build:
+      context: ./backend  # Tu proyecto actual
+    container_name: java-jpa-app
+    depends_on:
+      - db
+    networks:
+      - backend
+    # ⚠️ NO EXPONEMOS EL PUERTO 8080 EXTERNAMENTE
+    # Solo accesible desde la red interna 'backend'
+
+  # API GATEWAY - PUNTO DE ENTRADA PÚBLICO
+  api-gateway:
+    build:
+      context: ./api-gateway  # El nuevo proyecto
+    container_name: api-gateway
+    depends_on:
+      - backend
+    networks:
+      - backend
+    ports:
+      - "8081:8081"  # ✅ ESTE es el puerto público
+    environment:
+      - BACKEND_URL=http://java-jpa-app:8080
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-jpa
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@proyecto.com"
+      PGADMIN_DEFAULT_PASSWORD: "adminpass"
+    ports:
+      - "5050:80"
+    networks:
+      - backend
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - db
+
+networks:
+  backend:
+
+volumes:
+  pgdata:
+  pgadmin-data:
