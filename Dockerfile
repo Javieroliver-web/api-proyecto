@@ -1,12 +1,21 @@
+# Etapa 1: Construcción
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY . .
-RUN mvn clean package -U -DskipTests
+COPY pom.xml .
+# Descarga dependencias
+RUN mvn dependency:go-offline
+COPY src ./src
+# Compila el proyecto
+RUN mvn clean package -DskipTests
 
 # Etapa 2: Ejecución
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-COPY --from=build /app/target/api-gateway-1.0-SNAPSHOT.jar app.jar
+# --- CORRECCIÓN AQUÍ ---
+# Usamos *.jar para que copie el archivo que haya generado Maven, 
+# sin importar si se llama 'sprintix-api' o 'api-gateway'.
+COPY --from=build /app/target/*.jar app.jar
 
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
