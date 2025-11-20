@@ -1,62 +1,48 @@
+version: '3.8'
+
 services:
+  # Base de Datos
   db:
     image: postgres:17
-    container_name: postgres-db-jpa
+    container_name: sprintix-db
+    restart: unless-stopped
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypass
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
-    networks:
-      - backend
     volumes:
       - pgdata:/var/lib/postgresql/data
-
-  # Backend - AHORA SOLO ACCESIBLE INTERNAMENTE
-  backend:
-    build:
-      context: ./backend  # Tu proyecto actual
-    container_name: java-jpa-app
-    depends_on:
-      - db
     networks:
-      - backend
-    # ⚠️ NO EXPONEMOS EL PUERTO 8080 EXTERNAMENTE
-    # Solo accesible desde la red interna 'backend'
+      - sprintix-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # API GATEWAY - PUNTO DE ENTRADA PÚBLICO
-  api-gateway:
-    build:
-      context: ./api-gateway  # El nuevo proyecto
-    container_name: api-gateway
-    depends_on:
-      - backend
-    networks:
-      - backend
+  # Tu API Spring Boot (Unificada)
+  api:
+    build: .  # <-- Construye la carpeta ACTUAL
+    container_name: sprintix-api
+    restart: unless-stopped
     ports:
-      - "8081:8081"  # ✅ ESTE es el puerto público
+      - "8080:8080"
     environment:
-      - BACKEND_URL=http://java-jpa-app:8080
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin-jpa
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@proyecto.com"
-      PGADMIN_DEFAULT_PASSWORD: "adminpass"
-    ports:
-      - "5050:80"
+      - DB_HOST=db
+      - DB_NAME=mydb
+      - DB_USER=myuser
+      - DB_PASSWORD=mypass
     networks:
-      - backend
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - sprintix-network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 networks:
-  backend:
+  sprintix-network:
+    driver: bridge
 
 volumes:
   pgdata:
-  pgadmin-data:
