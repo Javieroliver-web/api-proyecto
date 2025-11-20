@@ -1,4 +1,4 @@
-package gateway.util;
+package com.sprintix.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
