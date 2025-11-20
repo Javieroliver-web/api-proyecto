@@ -1,4 +1,4 @@
-package gateway.controller;
+package com.sprintix.controller;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.client.Client;
