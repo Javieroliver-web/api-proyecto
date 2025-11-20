@@ -3,7 +3,7 @@ package com.sprintix.service;
 import com.sprintix.entity.Usuario;
 import com.sprintix.repository.UsuarioRepository;
 // Asegúrate de importar tus utilidades antiguas aquí:
-import util.PasswordUtil; 
+import com.sprintix.util.PasswordUtil; 
 // import util.JWTUtil; // Si vas a generar el token aquí
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,29 +1,29 @@
 package com.sprintix.dto;
 
+import com.sprintix.entity.Usuario;
+
 public class AuthResponseDTO {
     
     private boolean success;
     private String message;
     private String token;
-    private UsuarioDTO usuario;
+    private Usuario usuario;
 
-    // Constructores
-    public AuthResponseDTO() {}
+    // --- Constructor 1: Respuesta simple (Error o éxito sin datos) ---
+    public AuthResponseDTO(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
 
-    public AuthResponseDTO(boolean success, String message, String token, UsuarioDTO usuario) {
+    // --- Constructor 2: Respuesta completa (Login/Registro exitoso) ---
+    public AuthResponseDTO(boolean success, String message, String token, Usuario usuario) {
         this.success = success;
         this.message = message;
         this.token = token;
         this.usuario = usuario;
     }
 
-    // Constructor para errores (sin token ni usuario)
-    public AuthResponseDTO(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
-
-    // Getters y Setters
+    // --- Getters y Setters ---
     public boolean isSuccess() {
         return success;
     }
@@ -48,11 +48,11 @@ public class AuthResponseDTO {
         this.token = token;
     }
 
-    public UsuarioDTO getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 }

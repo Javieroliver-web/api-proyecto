@@ -1,10 +1,13 @@
 package com.sprintix.controller;
 
+// 1. IMPORTS CORRECTOS (Verifica que coincidan con tus paquetes)
 import com.sprintix.dto.AuthResponseDTO;
 import com.sprintix.dto.LoginDTO;
+import com.sprintix.dto.UsuarioCreateDTO;
 import com.sprintix.entity.Usuario;
 import com.sprintix.service.AuthService;
 import com.sprintix.util.JWTUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +23,37 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
 
+    // --- REGISTRO ---
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDTO> register(@RequestBody Usuario usuario) {
-        // Nota: Idealmente recibirías UsuarioCreateDTO y lo convertirías a Usuario aquí
+    public ResponseEntity<AuthResponseDTO> register(@RequestBody UsuarioCreateDTO createDTO) {
         try {
+            // 2. CONVERSIÓN MANUAL (El arreglo clave)
+            // El servicio espera 'Usuario', pero recibimos 'UsuarioCreateDTO'.
+            // Creamos la entidad y pasamos los datos:
+            Usuario usuario = new Usuario();
+            usuario.setNombre(createDTO.getNombre());
+            usuario.setApellido(createDTO.getApellido());
+            usuario.setEmail(createDTO.getEmail());
+            usuario.setPassword(createDTO.getPassword());
+            usuario.setRol("usuario"); // Rol por defecto si no viene en el DTO
+
+            // 3. LLAMADA AL SERVICIO (Usando la entidad 'usuario')
             Usuario nuevoUsuario = authService.registrar(usuario);
-            // Generar token inmediato al registrar
+            
+            // 4. GENERAR TOKEN
             String token = jwtUtil.generateToken(nuevoUsuario.getEmail(), nuevoUsuario.getRol());
             
+            // 5. RESPUESTA
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AuthResponseDTO(true, "Registro exitoso", token, nuevoUsuario));
+
         } catch (Exception e) {
             return ResponseEntity.badRequest()
-                    .body(new AuthResponseDTO(false, "Error al registrar: " + e.getMessage()));
+                    .body(new AuthResponseDTO(false, "Error: " + e.getMessage()));
         }
     }
 
+    // --- LOGIN ---
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginDTO loginDTO) {
         Usuario usuario = authService.login(loginDTO.getEmail(), loginDTO.getPassword());
