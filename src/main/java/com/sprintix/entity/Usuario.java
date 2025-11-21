@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.*; // Importante: usa jakarta.persistence
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // <--- IMPORTANTE
 
 @Entity
 @Table(name = "Usuario")
@@ -26,47 +27,45 @@ public class Usuario {
     private Date fecha_registro;
 
     // --- Relaciones ---
-    // (Estas son las relaciones de tu diagrama. Las añadiremos ahora
-    // para que no sean el siguiente error)
 
-    // Un usuario es "creador" de muchos proyectos
+    // CORTAMOS EL BUCLE AQUÍ: Al pedir un usuario, no traigas toda la historia de sus proyectos
     @OneToMany(mappedBy = "creador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore 
     private Set<Proyecto> proyectosCreados = new HashSet<>();
 
-    // Un usuario recibe muchas notificaciones
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Notificacion> notificaciones = new HashSet<>();
 
-    // Un usuario participa en muchos proyectos (tabla intermedia Usuario_Proyecto)
     @ManyToMany
     @JoinTable(
         name = "Usuario_Proyecto",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "proyecto_id")
     )
+    @JsonIgnore
     private Set<Proyecto> proyectosAsignados = new HashSet<>();
 
-    // Un usuario tiene muchas tareas asignadas
     @ManyToMany
     @JoinTable(
         name = "Tarea_Asignada",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "tarea_id")
     )
+    @JsonIgnore
     private Set<Tarea> tareasAsignadas = new HashSet<>();
 
-    // Un usuario tiene muchas tareas favoritas
     @ManyToMany
     @JoinTable(
         name = "Tarea_Favorita",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name = "tarea_id")
     )
+    @JsonIgnore
     private Set<Tarea> tareasFavoritas = new HashSet<>();
 
 
     // --- Getters y Setters ---
-    // (En VS Code: Clic derecho > Source Action > Generate Getters and Setters)
 
     public int getId() {
         return id;
@@ -100,6 +99,9 @@ public class Usuario {
         this.email = email;
     }
 
+    // IMPORTANTE: Por seguridad, también deberíamos ocultar el password en el JSON
+    // aunque esté encriptado, es buena práctica no enviarlo nunca al frontend.
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
