@@ -3,14 +3,12 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Objects;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore; // <--- 1. IMPORTAR ESTO
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties; // <--- 2. IMPORTAR ESTO
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Esta es la clase Entidad que mapea la tabla "Proyecto".
- */
 @Entity
 @Table(name = "Proyecto")
 public class Proyecto {
@@ -34,107 +32,62 @@ public class Proyecto {
 
     // --- Relaciones ---
     
-    /**
-     * El creador SÍ queremos verlo, pero como es carga perezosa (LAZY),
-     * usamos @JsonIgnoreProperties para evitar errores de proxy de Hibernate.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // <--- EVITA ERROR 500 EN LAZY LOAD
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Evita error 500 en Lazy Load
     private Usuario creador;
 
-    /**
-     * IMPORTANTE: Ponemos @JsonIgnore aquí.
-     * Al pedir la lista de proyectos, NO queremos que se descarguen todas las tareas.
-     * Para ver tareas, usaremos el endpoint específico: /api/tareas/proyecto/{id}
-     */
+    // Ignoramos tareas al listar proyectos para evitar sobrecarga y bucles
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore // <--- CORRECCIÓN CLAVE
+    @JsonIgnore 
     private Set<Tarea> tareas = new HashSet<>();
 
-    /**
-     * IMPORTANTE: Ponemos @JsonIgnore aquí.
-     * No queremos listar todos los participantes en la vista general.
-     */
+    // Ignoramos participantes al listar proyectos (usar endpoint específico para verlos)
     @ManyToMany(mappedBy = "proyectosAsignados")
-    @JsonIgnore // <--- CORRECCIÓN CLAVE
+    @JsonIgnore
     private Set<Usuario> participantes = new HashSet<>();
 
-    // --- Constructor Vacío ---
-    public Proyecto() {
-    }
+    public Proyecto() {}
 
     // --- Getters y Setters ---
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getId() {
-        return id;
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    public Date getFecha_inicio() { return fecha_inicio; }
+    public void setFecha_inicio(Date fecha_inicio) { this.fecha_inicio = fecha_inicio; }
+
+    public Date getFecha_fin() { return fecha_fin; }
+    public void setFecha_fin(Date fecha_fin) { this.fecha_fin = fecha_fin; }
+
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
+
+    public Usuario getCreador() { return creador; }
+    public void setCreador(Usuario creador) { this.creador = creador; }
+
+    public Set<Tarea> getTareas() { return tareas; }
+    public void setTareas(Set<Tarea> tareas) { this.tareas = tareas; }
+
+    public Set<Usuario> getParticipantes() { return participantes; }
+    public void setParticipantes(Set<Usuario> participantes) { this.participantes = participantes; }
+
+    // --- Identidad ---
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Proyecto proyecto = (Proyecto) o;
+        return id != 0 && id == proyecto.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Date getFecha_inicio() {
-        return fecha_inicio;
-    }
-
-    public void setFecha_inicio(Date fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
-    }
-
-    public Date getFecha_fin() {
-        return fecha_fin;
-    }
-
-    public void setFecha_fin(Date fecha_fin) {
-        this.fecha_fin = fecha_fin;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Usuario getCreador() {
-        return creador;
-    }
-
-    public void setCreador(Usuario creador) {
-        this.creador = creador;
-    }
-
-    public Set<Tarea> getTareas() {
-        return tareas;
-    }
-
-    public void setTareas(Set<Tarea> tareas) {
-        this.tareas = tareas;
-    }
-
-    public Set<Usuario> getParticipantes() {
-        return participantes;
-    }
-
-    public void setParticipantes(Set<Usuario> participantes) {
-        this.participantes = participantes;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
