@@ -3,7 +3,9 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import jakarta.persistence.*; // Importa todo lo de JPA
+
+import jakarta.persistence.*; 
+import com.fasterxml.jackson.annotation.JsonIgnore; // <--- IMPORTANTE: Añadir este import
 
 /**
  * Esta es la clase Entidad que mapea la tabla "Tarea".
@@ -19,12 +21,12 @@ public class Tarea {
 
     private String titulo;
     
-    @Column(columnDefinition = "TEXT") // Para que coincida con el tipo 'text' de tu diagrama
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
     
     private String estado;
     
-    @Temporal(TemporalType.TIMESTAMP) // Fecha y hora
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_limite;
 
     // --- Relaciones ---
@@ -32,23 +34,24 @@ public class Tarea {
     /**
      * Relación Muchos-a-Uno con Proyecto.
      * Muchas tareas pertenecen a un proyecto.
+     * CORTAMOS EL BUCLE AQUÍ: La tarea conoce a su proyecto en Base de Datos,
+     * pero al convertir a JSON, no volvemos a pintar el proyecto entero.
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id", nullable = false)
+    @JsonIgnore // <--- ESTO SOLUCIONA EL ERROR 500 EN /proyectos
     private Proyecto proyecto;
 
     /**
      * Relación Muchos-a-Muchos con Usuario (para asignados).
-     * 'mappedBy = "tareasAsignadas"' indica que la clase 'Usuario' maneja esta relación.
-     * Este es el lado "espejo" (inverse side).
      */
     @ManyToMany(mappedBy = "tareasAsignadas")
+    // No necesitamos @JsonIgnore aquí porque ya lo pusimos en el lado "Usuario" (tareasAsignadas)
+    // Así que se mostrarán los usuarios, pero esos usuarios no volverán a mostrar sus tareas. Perfecto.
     private Set<Usuario> usuariosAsignados = new HashSet<>();
 
     /**
      * Relación Muchos-a-Muchos con Usuario (para favoritos).
-     * 'mappedBy = "tareasFavoritas"' indica que la clase 'Usuario' maneja esta relación.
-     * Este es el lado "espejo" (inverse side).
      */
     @ManyToMany(mappedBy = "tareasFavoritas")
     private Set<Usuario> usuariosFavoritos = new HashSet<>();
@@ -124,44 +127,25 @@ public class Tarea {
         this.usuariosFavoritos = usuariosFavoritos;
     }
 
-    // -----------------------------------------------------------------
-    // --- MÉTODOS HELPER PARA SINCRONIZAR RELACIONES BIDIRECCIONALES ---
-    // --- ¡ESTA ES LA SOLUCIÓN! ---
-    // -----------------------------------------------------------------
+    // --- MÉTODOS HELPER ---
 
-    /**
-     * Añade un usuario a la lista de asignados,
-     * sincronizando AMBOS lados de la relación.
-     */
     public void addUsuarioAsignado(Usuario usuario) {
         this.usuariosAsignados.add(usuario);
-        usuario.getTareasAsignadas().add(this); // Sincroniza el lado dueño
+        usuario.getTareasAsignadas().add(this);
     }
 
-    /**
-     * Remueve un usuario de la lista de asignados,
-     * sincronizando AMBOS lados de la relación.
-     */
     public void removeUsuarioAsignado(Usuario usuario) {
         this.usuariosAsignados.remove(usuario);
-        usuario.getTareasAsignadas().remove(this); // Sincroniza el lado dueño
+        usuario.getTareasAsignadas().remove(this);
     }
 
-    /**
-     * Añade un usuario a la lista de favoritos,
-     * sincronizando AMBOS lados de la relación.
-     */
     public void addUsuarioFavorito(Usuario usuario) {
         this.usuariosFavoritos.add(usuario);
-        usuario.getTareasFavoritas().add(this); // Sincroniza el lado dueño
+        usuario.getTareasFavoritas().add(this);
     }
 
-    /**
-     * Remueve un usuario de la lista de favoritos,
-     * sincronizando AMBOS lados de la relación.
-     */
     public void removeUsuarioFavorito(Usuario usuario) {
         this.usuariosFavoritos.remove(usuario);
-        usuario.getTareasFavoritas().remove(this); // Sincroniza el lado dueño
+        usuario.getTareasFavoritas().remove(this);
     }
 }
