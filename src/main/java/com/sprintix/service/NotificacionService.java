@@ -32,4 +32,16 @@ public class NotificacionService {
             notificacionRepository.save(n);
         });
     }
+
+    // --- NUEVOS MÉTODOS ---
+    
+    public void marcarTodasComoLeidas(int usuarioId) {
+        List<Notificacion> noLeidas = notificacionRepository.findByUsuarioIdAndLeidaFalse(usuarioId);
+        noLeidas.forEach(n -> n.setLeida(true));
+        notificacionRepository.saveAll(noLeidas);
+    }
+
+    public void eliminar(int id) {
+        notificacionRepository.deleteById(id);
+    }
 }

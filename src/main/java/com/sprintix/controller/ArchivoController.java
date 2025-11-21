@@ -20,6 +20,12 @@ public class ArchivoController {
         return archivoService.listarPorProyecto(proyectoId);
     }
 
+    // --- NUEVO: LISTAR POR USUARIO ---
+    @GetMapping("/usuario/{usuarioId}")
+    public List<Archivo> listarPorUsuario(@PathVariable int usuarioId) {
+        return archivoService.listarPorUsuario(usuarioId);
+    }
+
     @PostMapping
     public Archivo subirArchivo(@RequestBody Archivo archivo) {
         return archivoService.guardar(archivo);

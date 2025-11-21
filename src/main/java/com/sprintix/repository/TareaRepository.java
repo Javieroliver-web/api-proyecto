@@ -12,6 +12,8 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
     List<Tarea> findByProyectoId(int proyectoId);
     
     // Obtener tareas asignadas a un usuario específico
-    // Nota: Como es una relación ManyToMany, usamos el nombre de la propiedad en Tarea
     List<Tarea> findByUsuariosAsignados_Id(int usuarioId);
+
+    // --- NUEVO: Para obtener las tareas favoritas de un usuario ---
+    List<Tarea> findByUsuariosFavoritos_Id(int usuarioId);
 }

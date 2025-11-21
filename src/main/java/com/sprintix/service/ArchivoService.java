@@ -25,4 +25,9 @@ public class ArchivoService {
     public void eliminar(int id) {
         archivoRepository.deleteById(id);
     }
+
+    // --- NUEVO MÉTODO ---
+    public List<Archivo> listarPorUsuario(int usuarioId) {
+        return archivoRepository.findByUsuarioId(usuarioId);
+    }
 }

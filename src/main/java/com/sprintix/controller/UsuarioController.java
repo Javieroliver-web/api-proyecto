@@ -27,11 +27,24 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Nota: El crear/registrar principal está en AuthController, 
-    // pero si necesitas un admin creando usuarios, sería así:
     @PostMapping
     public Usuario guardar(@RequestBody Usuario usuario) {
         return usuarioService.guardar(usuario);
+    }
+
+    // --- NUEVO: ACTUALIZAR USUARIO ---
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> actualizar(@PathVariable int id, @RequestBody Usuario usuarioDetalles) {
+        return usuarioService.obtenerPorId(id).map(usuario -> {
+            usuario.setNombre(usuarioDetalles.getNombre());
+            usuario.setApellido(usuarioDetalles.getApellido());
+            usuario.setEmail(usuarioDetalles.getEmail());
+            // Opcional: Actualizar rol si es admin
+            if(usuarioDetalles.getRol() != null) {
+                usuario.setRol(usuarioDetalles.getRol());
+            }
+            return ResponseEntity.ok(usuarioService.guardar(usuario));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

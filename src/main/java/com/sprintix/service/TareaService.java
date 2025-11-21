@@ -49,4 +49,27 @@ public class TareaService {
         
         return tareaRepository.save(tarea);
     }
+
+    // --- NUEVOS MÉTODOS ---
+
+    public List<Tarea> listarAsignadasPorUsuario(int usuarioId) {
+        return tareaRepository.findByUsuariosAsignados_Id(usuarioId);
+    }
+
+    public List<Tarea> listarFavoritasPorUsuario(int usuarioId) {
+        return tareaRepository.findByUsuariosFavoritos_Id(usuarioId);
+    }
+
+    public Tarea marcarComoFavorita(int tareaId, int usuarioId) {
+        Tarea tarea = tareaRepository.findById(tareaId)
+            .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+        
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        // Usamos el método helper de la entidad Tarea
+        tarea.addUsuarioFavorito(usuario);
+        
+        return tareaRepository.save(tarea);
+    }
 }

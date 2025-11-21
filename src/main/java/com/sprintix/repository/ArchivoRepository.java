@@ -10,4 +10,7 @@ public interface ArchivoRepository extends JpaRepository<Archivo, Integer> {
     
     // Listar archivos de un proyecto
     List<Archivo> findByProyectoId(int proyectoId);
+
+    // --- NUEVO: Para obtener archivos subidos por un usuario ---
+    List<Archivo> findByUsuarioId(int usuarioId);
 }

@@ -35,4 +35,18 @@ public class NotificacionController {
         notificacionService.marcarComoLeida(id);
         return ResponseEntity.ok().build();
     }
+
+    // --- NUEVO: MARCAR TODAS COMO LEÍDAS ---
+    @PutMapping("/usuario/{usuarioId}/leer-todas")
+    public ResponseEntity<Void> marcarTodasComoLeidas(@PathVariable int usuarioId) {
+        notificacionService.marcarTodasComoLeidas(usuarioId);
+        return ResponseEntity.ok().build();
+    }
+
+    // --- NUEVO: ELIMINAR NOTIFICACIÓN ---
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable int id) {
+        notificacionService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

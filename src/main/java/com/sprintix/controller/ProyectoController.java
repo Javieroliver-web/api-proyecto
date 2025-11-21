@@ -48,7 +48,6 @@ public class ProyectoController {
         String token = authHeader.substring(7);
         String emailUsuario = jwtUtil.extractUsername(token);
         
-        // Buscamos al usuario completo para asignarlo como creador
         Optional<Usuario> creador = usuarioService.obtenerPorEmail(emailUsuario);
         
         if (creador.isPresent()) {
@@ -58,6 +57,19 @@ public class ProyectoController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuario creador no encontrado");
         }
+    }
+
+    // --- NUEVO: ACTUALIZAR PROYECTO ---
+    @PutMapping("/{id}")
+    public ResponseEntity<Proyecto> actualizar(@PathVariable int id, @RequestBody Proyecto proyectoDetalles) {
+        return proyectoService.obtenerPorId(id).map(proyecto -> {
+            proyecto.setNombre(proyectoDetalles.getNombre());
+            proyecto.setDescripcion(proyectoDetalles.getDescripcion());
+            proyecto.setFecha_inicio(proyectoDetalles.getFecha_inicio());
+            proyecto.setFecha_fin(proyectoDetalles.getFecha_fin());
+            proyecto.setEstado(proyectoDetalles.getEstado());
+            return ResponseEntity.ok(proyectoService.guardar(proyecto));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
