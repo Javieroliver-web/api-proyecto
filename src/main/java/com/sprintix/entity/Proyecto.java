@@ -3,11 +3,13 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import jakarta.persistence.*; // Importa todo lo de JPA
+
+import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore; // <--- 1. IMPORTAR ESTO
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties; // <--- 2. IMPORTAR ESTO
 
 /**
  * Esta es la clase Entidad que mapea la tabla "Proyecto".
- * Incluye todas las relaciones y los getters/setters.
  */
 @Entity
 @Table(name = "Proyecto")
@@ -19,13 +21,13 @@ public class Proyecto {
 
     private String nombre;
     
-    @Column(columnDefinition = "TEXT") // Para que coincida con el tipo 'text' de tu diagrama
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
     
-    @Temporal(TemporalType.DATE) // Solo fecha, sin hora
+    @Temporal(TemporalType.DATE)
     private Date fecha_inicio;
     
-    @Temporal(TemporalType.DATE) // Solo fecha, sin hora
+    @Temporal(TemporalType.DATE)
     private Date fecha_fin;
     
     private String estado;
@@ -33,40 +35,36 @@ public class Proyecto {
     // --- Relaciones ---
     
     /**
-     * Relación Muchos-a-Uno con Usuario.
-     * Muchos proyectos pueden ser creados por un usuario.
-     * 'fetch = FetchType.LAZY' es una optimización para no cargar el usuario a menos que se pida.
-     * 'JoinColumn' especifica que 'usuario_id' es la clave foránea en esta tabla.
+     * El creador SÍ queremos verlo, pero como es carga perezosa (LAZY),
+     * usamos @JsonIgnoreProperties para evitar errores de proxy de Hibernate.
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // <--- EVITA ERROR 500 EN LAZY LOAD
     private Usuario creador;
 
     /**
-     * Relación Uno-a-Muchos con Tarea.
-     * Un proyecto puede tener muchas tareas.
-     * 'mappedBy = "proyecto"' indica que la clase 'Tarea' maneja la relación (con su campo 'proyecto').
-     * 'cascade = CascadeType.ALL' significa que si borras un proyecto, sus tareas también se borran.
-     * 'orphanRemoval = true' ayuda a limpiar tareas que se queden sin proyecto.
+     * IMPORTANTE: Ponemos @JsonIgnore aquí.
+     * Al pedir la lista de proyectos, NO queremos que se descarguen todas las tareas.
+     * Para ver tareas, usaremos el endpoint específico: /api/tareas/proyecto/{id}
      */
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // <--- CORRECCIÓN CLAVE
     private Set<Tarea> tareas = new HashSet<>();
 
     /**
-     * Relación Muchos-a-Muchos con Usuario (para participantes).
-     * 'mappedBy = "proyectosAsignados"' indica que la clase 'Usuario' maneja esta relación
-     * (con su campo 'proyectosAsignados' que define la @JoinTable).
+     * IMPORTANTE: Ponemos @JsonIgnore aquí.
+     * No queremos listar todos los participantes en la vista general.
      */
     @ManyToMany(mappedBy = "proyectosAsignados")
+    @JsonIgnore // <--- CORRECCIÓN CLAVE
     private Set<Usuario> participantes = new HashSet<>();
 
     // --- Constructor Vacío ---
     public Proyecto() {
-        // Requerido por JPA
     }
 
     // --- Getters y Setters ---
-    // ¡ESTO ES LO QUE SOLUCIONA TODOS TUS ERRORES!
 
     public int getId() {
         return id;
