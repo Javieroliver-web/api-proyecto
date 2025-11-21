@@ -8,9 +8,10 @@ import java.util.List;
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
     
-    // Buscar todos los proyectos creados por un usuario específico
     List<Proyecto> findByCreadorId(int creadorId);
     
-    // Buscar proyectos por estado (ej. "Activo", "Completado")
     List<Proyecto> findByEstado(String estado);
+
+    // --- NUEVO: Búsqueda por nombre (ignora mayúsculas/minúsculas) ---
+    List<Proyecto> findByNombreContainingIgnoreCase(String nombre);
 }

@@ -20,7 +20,11 @@ public class TareaService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Tarea> listarPorProyecto(int proyectoId) {
+    // --- ACTUALIZADO: Soporta filtro opcional por estado ---
+    public List<Tarea> listarPorProyecto(int proyectoId, String estado) {
+        if (estado != null && !estado.isEmpty()) {
+            return tareaRepository.findByProyectoIdAndEstado(proyectoId, estado);
+        }
         return tareaRepository.findByProyectoId(proyectoId);
     }
 
@@ -36,21 +40,26 @@ public class TareaService {
         tareaRepository.deleteById(id);
     }
 
-    // Lógica de negocio: Asignar usuario
     public Tarea asignarUsuario(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
-            
         Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         
-        // Usamos el método helper de tu entidad para sincronizar la relación
         tarea.addUsuarioAsignado(usuario);
-        
         return tareaRepository.save(tarea);
     }
 
-    // --- NUEVOS MÉTODOS ---
+    // --- NUEVO: DESASIGNAR USUARIO ---
+    public void desasignarUsuario(int tareaId, int usuarioId) {
+        Tarea tarea = tareaRepository.findById(tareaId)
+            .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        tarea.removeUsuarioAsignado(usuario); // Usa el helper de la entidad
+        tareaRepository.save(tarea);
+    }
 
     public List<Tarea> listarAsignadasPorUsuario(int usuarioId) {
         return tareaRepository.findByUsuariosAsignados_Id(usuarioId);
@@ -63,13 +72,21 @@ public class TareaService {
     public Tarea marcarComoFavorita(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
-        
         Usuario usuario = usuarioRepository.findById(usuarioId)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         
-        // Usamos el método helper de la entidad Tarea
         tarea.addUsuarioFavorito(usuario);
-        
         return tareaRepository.save(tarea);
+    }
+
+    // --- NUEVO: ELIMINAR DE FAVORITOS ---
+    public void eliminarDeFavoritos(int tareaId, int usuarioId) {
+        Tarea tarea = tareaRepository.findById(tareaId)
+            .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        tarea.removeUsuarioFavorito(usuario); // Usa el helper de la entidad
+        tareaRepository.save(tarea);
     }
 }

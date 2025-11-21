@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/proyectos")
@@ -29,6 +31,12 @@ public class ProyectoController {
     @GetMapping
     public List<Proyecto> listarTodos() {
         return proyectoService.listarTodos();
+    }
+
+    // --- NUEVO: BUSCAR PROYECTOS ---
+    @GetMapping("/buscar")
+    public List<Proyecto> buscar(@RequestParam String nombre) {
+        return proyectoService.buscarPorNombre(nombre);
     }
 
     @GetMapping("/{id}")
@@ -59,7 +67,6 @@ public class ProyectoController {
         }
     }
 
-    // --- NUEVO: ACTUALIZAR PROYECTO ---
     @PutMapping("/{id}")
     public ResponseEntity<Proyecto> actualizar(@PathVariable int id, @RequestBody Proyecto proyectoDetalles) {
         return proyectoService.obtenerPorId(id).map(proyecto -> {
@@ -70,6 +77,37 @@ public class ProyectoController {
             proyecto.setEstado(proyectoDetalles.getEstado());
             return ResponseEntity.ok(proyectoService.guardar(proyecto));
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    // --- NUEVOS ENDPOINTS: PARTICIPANTES ---
+
+    @GetMapping("/{id}/participantes")
+    public ResponseEntity<Set<Usuario>> listarParticipantes(@PathVariable int id) {
+        return proyectoService.obtenerPorId(id)
+            .map(p -> ResponseEntity.ok(p.getParticipantes()))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/{id}/participantes")
+    public ResponseEntity<?> agregarParticipante(@PathVariable int id, @RequestBody Map<String, Integer> body) {
+        Integer usuarioId = body.get("usuario_id");
+        if (usuarioId == null) return ResponseEntity.badRequest().body("usuario_id requerido");
+        try {
+            proyectoService.agregarParticipante(id, usuarioId);
+            return ResponseEntity.ok("Participante añadido");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}/participantes/{usuarioId}")
+    public ResponseEntity<?> eliminarParticipante(@PathVariable int id, @PathVariable int usuarioId) {
+        try {
+            proyectoService.eliminarParticipante(id, usuarioId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

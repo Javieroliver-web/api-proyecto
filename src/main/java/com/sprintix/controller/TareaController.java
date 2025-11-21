@@ -17,9 +17,11 @@ public class TareaController {
     @Autowired
     private TareaService tareaService;
 
+    // --- ACTUALIZADO: Soporta ?estado=pendiente ---
     @GetMapping("/proyecto/{proyectoId}")
-    public List<Tarea> listarPorProyecto(@PathVariable int proyectoId) {
-        return tareaService.listarPorProyecto(proyectoId);
+    public List<Tarea> listarPorProyecto(@PathVariable int proyectoId, 
+                                         @RequestParam(required = false) String estado) {
+        return tareaService.listarPorProyecto(proyectoId, estado);
     }
 
     @GetMapping("/{id}")
@@ -31,8 +33,18 @@ public class TareaController {
 
     @PostMapping
     public ResponseEntity<Tarea> crearTarea(@RequestBody Tarea tarea) {
-        // Nota: Asegúrate de que el objeto Tarea venga con el objeto Proyecto (o su ID) seteado
         return ResponseEntity.status(HttpStatus.CREATED).body(tareaService.guardar(tarea));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Tarea> actualizar(@PathVariable int id, @RequestBody Tarea tareaDetalles) {
+        return tareaService.obtenerPorId(id).map(tarea -> {
+            tarea.setTitulo(tareaDetalles.getTitulo());
+            tarea.setDescripcion(tareaDetalles.getDescripcion());
+            tarea.setEstado(tareaDetalles.getEstado());
+            tarea.setFecha_limite(tareaDetalles.getFecha_limite());
+            return ResponseEntity.ok(tareaService.guardar(tarea));
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/{id}/asignar")
@@ -48,31 +60,27 @@ public class TareaController {
         }
     }
 
-    // --- NUEVO: ACTUALIZAR TAREA ---
-    @PutMapping("/{id}")
-    public ResponseEntity<Tarea> actualizar(@PathVariable int id, @RequestBody Tarea tareaDetalles) {
-        return tareaService.obtenerPorId(id).map(tarea -> {
-            tarea.setTitulo(tareaDetalles.getTitulo());
-            tarea.setDescripcion(tareaDetalles.getDescripcion());
-            tarea.setEstado(tareaDetalles.getEstado());
-            tarea.setFecha_limite(tareaDetalles.getFecha_limite());
-            return ResponseEntity.ok(tareaService.guardar(tarea));
-        }).orElse(ResponseEntity.notFound().build());
+    // --- NUEVO: DESASIGNAR USUARIO ---
+    @DeleteMapping("/{id}/asignar/{usuarioId}")
+    public ResponseEntity<?> desasignarUsuario(@PathVariable int id, @PathVariable int usuarioId) {
+        try {
+            tareaService.desasignarUsuario(id, usuarioId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    // --- NUEVO: LISTAR ASIGNADAS A USUARIO ---
     @GetMapping("/usuario/{usuarioId}/asignadas")
     public List<Tarea> listarAsignadas(@PathVariable int usuarioId) {
         return tareaService.listarAsignadasPorUsuario(usuarioId);
     }
 
-    // --- NUEVO: LISTAR FAVORITAS DE USUARIO ---
     @GetMapping("/usuario/{usuarioId}/favoritas")
     public List<Tarea> listarFavoritas(@PathVariable int usuarioId) {
         return tareaService.listarFavoritasPorUsuario(usuarioId);
     }
 
-    // --- NUEVO: AGREGAR A FAVORITOS ---
     @PostMapping("/{id}/favorito")
     public ResponseEntity<?> agregarAFavoritos(@PathVariable int id, @RequestBody Map<String, Integer> body) {
         Integer usuarioId = body.get("usuario_id");
@@ -80,6 +88,17 @@ public class TareaController {
         try {
             Tarea tarea = tareaService.marcarComoFavorita(id, usuarioId);
             return ResponseEntity.ok(tarea);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // --- NUEVO: ELIMINAR DE FAVORITOS ---
+    @DeleteMapping("/{id}/favorito/{usuarioId}")
+    public ResponseEntity<?> eliminarDeFavoritos(@PathVariable int id, @PathVariable int usuarioId) {
+        try {
+            tareaService.eliminarDeFavoritos(id, usuarioId);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

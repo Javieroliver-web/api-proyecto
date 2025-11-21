@@ -1,5 +1,6 @@
 package com.sprintix.controller;
 
+import com.sprintix.dto.DashboardDTO;
 import com.sprintix.entity.Usuario;
 import com.sprintix.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +28,28 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // --- NUEVO: ENDPOINT DASHBOARD ---
+    @GetMapping("/{id}/dashboard")
+    public ResponseEntity<DashboardDTO> obtenerDashboard(@PathVariable int id) {
+        try {
+            DashboardDTO dashboard = usuarioService.obtenerDashboard(id);
+            return ResponseEntity.ok(dashboard);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public Usuario guardar(@RequestBody Usuario usuario) {
         return usuarioService.guardar(usuario);
     }
 
-    // --- NUEVO: ACTUALIZAR USUARIO ---
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable int id, @RequestBody Usuario usuarioDetalles) {
         return usuarioService.obtenerPorId(id).map(usuario -> {
             usuario.setNombre(usuarioDetalles.getNombre());
             usuario.setApellido(usuarioDetalles.getApellido());
             usuario.setEmail(usuarioDetalles.getEmail());
-            // Opcional: Actualizar rol si es admin
             if(usuarioDetalles.getRol() != null) {
                 usuario.setRol(usuarioDetalles.getRol());
             }
