@@ -1,0 +1,887 @@
+type: collection.insomnia.rest/5.0
+name: CRUD Sprintix
+meta:
+  id: wrk_9c8bb20c65b54897b17ea3ad2d316617
+  created: 1762936786617
+  modified: 1762936786617
+  description: ""
+collection:
+  - url: localhost:8080/api/auth/register
+    name: Añadir nuevo usuario
+    meta:
+      id: req_a12400425aff4f86a5a2c46bbc85c3ff
+      created: 1762601251058
+      modified: 1763453459230
+      isPrivate: false
+      description: ""
+      sortKey: -1762601251058
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nombre": "jose",
+          "apellido": "Pérez",
+          "email": "carlo@test.com",
+          "password": "123456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/usuarios
+    name: Obtener usuarios
+    meta:
+      id: req_94a9915c6b254ed0b18e97306436c0c4
+      created: 1762801305481
+      modified: 1763453441807
+      isPrivate: false
+      description: ""
+      sortKey: -1762801305481
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/login
+    name: Añadir datos con login
+    meta:
+      id: req_451c5bf29da14ef79ea42434214f2f28
+      created: 1762803643676
+      modified: 1763453477195
+      isPrivate: false
+      description: ""
+      sortKey: -1762803643676
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "email": "carlos@test.com",
+          "password": "123456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos
+    name: Añadir proyectos
+    meta:
+      id: req_d57b5d64dc62405fae7f10b4198f18fc
+      created: 1762803703018
+      modified: 1763453380056
+      isPrivate: false
+      description: ""
+      sortKey: -1762803703018
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "nombre": "Mi Proyecto Secreto",
+            "descripcion": "Descripción de prueba",
+        		"usuario_id": 1,
+        	  "fecha_inicio": "2025-11-11",
+        		"fecha_fin": "2025-11-20",
+        		"estado": "pendiente"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJ0ZXNUVHRAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY1NjkzLCJleHAiOjE3NjM0NzA0OTN9.jprf5fzNIycvairuHxRQPiWbUSOuKuhe_rJ8VtsQ7V5Za0dSpP160Of8XHXf5uoGAfy1QDMgs-Vne7P_R6HGkQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/me
+    name: Obtener datos usuario por token
+    meta:
+      id: req_5810b92417714537a9b6d94688205a35
+      created: 1762866870570
+      modified: 1763453367734
+      isPrivate: false
+      description: ""
+      sortKey: -1762866870570
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos
+    name: Obtener proyectos
+    meta:
+      id: req_9ea90010c3df4e3abe357608126816ad
+      created: 1762866955025
+      modified: 1763453306299
+      isPrivate: false
+      description: ""
+      sortKey: -1762866955025
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1
+    name: Obtener proyecto de usuario
+    meta:
+      id: req_10370d9631364dc481b5240a8ee201a0
+      created: 1762867008308
+      modified: 1763453294675
+      isPrivate: false
+      description: ""
+      sortKey: -1762867008308
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1
+    name: Actualizar proyecto de usuario
+    meta:
+      id: req_7c10829c8eb74671874f868b96fec646
+      created: 1762867070965
+      modified: 1763453281122
+      isPrivate: false
+      description: ""
+      sortKey: -1762867070965
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nombre": "Proyecto Alpha MODIFICADO",
+          "descripcion": "Descripción actualizada"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1
+    name: Eliminar proyecto de usuario
+    meta:
+      id: req_efde66f96b02425b92656a56227e1513
+      created: 1762867160909
+      modified: 1763453258396
+      isPrivate: false
+      description: ""
+      sortKey: -1762867160909
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas
+    name: Añadir tareas
+    meta:
+      id: req_c5697d2cb4354433b31efc4fece081d7
+      created: 1762867298724
+      modified: 1763453237852
+      isPrivate: false
+      description: ""
+      sortKey: -1762867298724
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "titulo": "Implementar login",
+          "descripcion": "Sistema de autenticación JWT",
+          "estado": "pendiente",
+          "proyecto_id": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/proyecto/1
+    name: Obtener tareas de proyecto
+    meta:
+      id: req_00e325e806c1485e826b7808fd606428
+      created: 1762867377404
+      modified: 1763453187249
+      isPrivate: false
+      description: ""
+      sortKey: -1762867377404
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1
+    name: Obtener tareas de usuario
+    meta:
+      id: req_088b838109d64e86a6424aaa28cf3e8d
+      created: 1762867508466
+      modified: 1763453174054
+      isPrivate: false
+      description: ""
+      sortKey: -1762867508466
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1
+    name: Actualizar tarea de usuario
+    meta:
+      id: req_f7b59a1100cb4145bdbc0f51bba5acc8
+      created: 1762867562697
+      modified: 1763453150321
+      isPrivate: false
+      description: ""
+      sortKey: -1762867562697
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "titulo": "Implementar login COMPLETO",
+          "descripcion": "JWT implementado y funcionando",
+          "estado": "completada"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/4/asignar
+    name: Asignar tarea a usuario
+    meta:
+      id: req_a89b71dbace74613b6737ea7a3bbca43
+      created: 1762895226618
+      modified: 1763453605217
+      isPrivate: false
+      description: ""
+      sortKey: -1762895226618
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "usuario_id": 1
+        }
+    parameters:
+      - id: pair_34e23cc3a2964b9ca54c4ee28f9bae18
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1/favorito
+    name: Añadir tarea a favorito
+    meta:
+      id: req_1c8f26b6ccb1449fad91b8446f274d47
+      created: 1762896220357
+      modified: 1763452808925
+      isPrivate: false
+      description: ""
+      sortKey: -1762896220357
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "usuario_id": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/usuario/1/asignadas
+    name: Obtener tareas asignadas
+    meta:
+      id: req_43b6bd54d2d14107ae6544885cfeea37
+      created: 1762896302535
+      modified: 1763452839420
+      isPrivate: false
+      description: ""
+      sortKey: -1762896302535
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1
+    name: Eliminar tarea
+    meta:
+      id: req_47a573479b5f4975810530d63dee1633
+      created: 1762900784533
+      modified: 1763452871629
+      isPrivate: false
+      description: ""
+      sortKey: -1762900784533
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones
+    name: Nueva notificación
+    meta:
+      id: req_b03b2ac32c3240b6af22b0890f8093a1
+      created: 1762900863409
+      modified: 1763452899902
+      isPrivate: false
+      description: ""
+      sortKey: -1762900863409
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "mensaje": "Tu tarea ha sido completada",
+          "tipo": "info",
+          "usuario_id": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/usuario/1/favoritas
+    name: Obtener tareas favoritas
+    meta:
+      id: req_7d2c0d5037144d96a69a5b61d58b1ce9
+      created: 1762900893568
+      modified: 1763452859477
+      isPrivate: false
+      description: ""
+      sortKey: -1762898543534
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones/usuario/1/no-leidas
+    name: Notificación de usuario no leida
+    meta:
+      id: req_879ff9cfe256431ab1cc7d4a22e94990
+      created: 1762901473161
+      modified: 1763452955404
+      isPrivate: false
+      description: ""
+      sortKey: -1762901473161
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones/1/leer
+    name: Marcar notificación leida
+    meta:
+      id: req_55bba1c5e8b64b83a5f255ecbec49a5e
+      created: 1762902080515
+      modified: 1763452979127
+      isPrivate: false
+      description: ""
+      sortKey: -1762902080515
+    method: PUT
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones/usuario/1/leer-todas
+    name: Marcar todas las notificaciones leidas
+    meta:
+      id: req_27d048ceafb349ec8922350b696707a4
+      created: 1762902121184
+      modified: 1763452998561
+      isPrivate: false
+      description: ""
+      sortKey: -1762902121184
+    method: PUT
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones/1
+    name: Eliminar notificaciones
+    meta:
+      id: req_b4ea802b15ba4315b67d9388e567833b
+      created: 1762902435024
+      modified: 1763453018118
+      isPrivate: false
+      description: ""
+      sortKey: -1762902435024
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/notificaciones/usuario/1
+    name: Obtener notificación de usuario
+    meta:
+      id: req_630b8e981e53492d8e54d7f591065407
+      created: 1762902693737
+      modified: 1763452924157
+      isPrivate: false
+      description: ""
+      sortKey: -1762901168285
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/archivos
+    name: Subir documentos
+    meta:
+      id: req_be71506ee828490aa93ed10d934c120d
+      created: 1762902870634
+      modified: 1763453040218
+      isPrivate: false
+      description: ""
+      sortKey: -1762902870634
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nombre": "documento.pdf",
+          "tipo": "application/pdf",
+          "url": "/uploads/documento.pdf",
+          "tamano": 1024000,
+          "proyecto_id": 1,
+          "usuario_id": 1
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/archivos/proyecto/1
+    name: Obtener archivos de proyecto
+    meta:
+      id: req_270a96557c724743ad2ced5a73f19d25
+      created: 1762903512894
+      modified: 1763453063964
+      isPrivate: false
+      description: ""
+      sortKey: -1762903512894
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/archivos/usuario/1
+    name: Obtener archivos de usuario
+    meta:
+      id: req_35422e7c43644e518f88a6e9c3f82c11
+      created: 1762903783666
+      modified: 1763453092076
+      isPrivate: false
+      description: ""
+      sortKey: -1762903783666
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/archivos/1
+    name: Eliminar archivos
+    meta:
+      id: req_daa5b228af0249eaae2deba2aa671274
+      created: 1762903810075
+      modified: 1763453108014
+      isPrivate: false
+      description: ""
+      sortKey: -1762903810075
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/4
+    name: Actualizar usuario
+    meta:
+      id: req_5bcef8d75a974a3e8e24dae3e9548539
+      created: 1763453892050
+      modified: 1763453975510
+      isPrivate: false
+      description: ""
+      sortKey: -1763453892050
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+                "nombre": "Carlos Actualizado",
+                "apellido": "Pérez Modificado",
+                "email": "carlo@gmail.com",
+                "rol": "admin"
+              }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/1
+    name: Eliminar usuario
+    meta:
+      id: req_d7784b465f3e47d0a59e76df9fdc73be
+      created: 1763454006435
+      modified: 1763454036535
+      isPrivate: false
+      description: ""
+      sortKey: -1763454006435
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/1
+    name: Obtener usuario por id
+    meta:
+      id: req_4865c11c68c64800b0bb59e9246053ac
+      created: 1763454053419
+      modified: 1763454076635
+      isPrivate: false
+      description: ""
+      sortKey: -1763454053419
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/auth/logout
+    name: Cerrar sesión
+    meta:
+      id: req_51badd9eec95492ebef168f6636788c8
+      created: 1763454554404
+      modified: 1763454600531
+      isPrivate: false
+      description: ""
+      sortKey: -1763454554404
+    method: POST
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1f1998b258a34b65b54192b5b864e1ee
+    created: 1762601245692
+    modified: 1762601245692
+environments:
+  name: Base Environment
+  meta:
+    id: env_bf8cbc438a8e437cb3518c88c52cb158
+    created: 1762424488068
+    modified: 1762601245641
+    isPrivate: false
