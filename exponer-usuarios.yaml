@@ -1,0 +1,127 @@
+type: collection.insomnia.rest/5.0
+name: CRUD Sprintix
+meta:
+  id: wrk_9c8bb20c65b54897b17ea3ad2d316617
+  created: 1762936786617
+  modified: 1762936786617
+  description: ""
+collection:
+  - url: localhost:8080/api/auth/register
+    name: Añadir nuevo usuario
+    meta:
+      id: req_a12400425aff4f86a5a2c46bbc85c3ff
+      created: 1762601251058
+      modified: 1763726663997
+      isPrivate: false
+      description: ""
+      sortKey: -1762601251058
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nombre": "luis",
+          "apellido": "Pérez",
+          "email": "luis@test.com",
+          "password": "123456"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: localhost:8080/api/usuarios
+    name: Obtener usuarios
+    meta:
+      id: req_94a9915c6b254ed0b18e97306436c0c4
+      created: 1762801305481
+      modified: 1763453441807
+      isPrivate: false
+      description: ""
+      sortKey: -1762801305481
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/4
+    name: Actualizar usuario
+    meta:
+      id: req_5bcef8d75a974a3e8e24dae3e9548539
+      created: 1763453892050
+      modified: 1763726809166
+      isPrivate: false
+      description: ""
+      sortKey: -1763453892050
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+                "nombre": "Lui Actualizado",
+                "apellido": "Pére Modificado",
+                "email": "luis@gmail.com",
+                "rol": "admin"
+              }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/4
+    name: Eliminar usuario
+    meta:
+      id: req_d7784b465f3e47d0a59e76df9fdc73be
+      created: 1763454006435
+      modified: 1763726847322
+      isPrivate: false
+      description: ""
+      sortKey: -1763454006435
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1f1998b258a34b65b54192b5b864e1ee
+    created: 1762601245692
+    modified: 1762601245692
+environments:
+  name: Base Environment
+  meta:
+    id: env_bf8cbc438a8e437cb3518c88c52cb158
+    created: 1762424488068
+    modified: 1762601245641
+    isPrivate: false

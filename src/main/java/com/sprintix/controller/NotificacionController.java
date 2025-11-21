@@ -2,13 +2,15 @@ package com.sprintix.controller;
 
 import com.sprintix.dto.NotificacionCreateDTO;
 import com.sprintix.entity.Notificacion;
+import com.sprintix.entity.Usuario;
 import com.sprintix.service.NotificacionService;
-import com.sprintix.service.UsuarioService; // <--- 1. Importar esto
+import com.sprintix.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/notificaciones")
@@ -18,7 +20,7 @@ public class NotificacionController {
     private NotificacionService notificacionService;
 
     @Autowired
-    private UsuarioService usuarioService; // <--- 2. Inyectar UsuarioService
+    private UsuarioService usuarioService;
 
     @GetMapping("/usuario/{usuarioId}")
     public List<Notificacion> listarPorUsuario(@PathVariable int usuarioId) {
@@ -30,22 +32,29 @@ public class NotificacionController {
         return notificacionService.listarNoLeidas(usuarioId);
     }
 
-    // --- CORRECCIÓN PRINCIPAL ---
+    // --- MÉTODO CORREGIDO ---
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody NotificacionCreateDTO createDTO) {
-        // Buscamos al usuario por el ID que viene en el JSON (createDTO.getUsuario_id())
-        return usuarioService.obtenerPorId(createDTO.getUsuario_id())
-            .map(usuario -> {
-                // Creamos la entidad manualmente con los datos del DTO
-                Notificacion notificacion = new Notificacion();
-                notificacion.setMensaje(createDTO.getMensaje());
-                notificacion.setTipo(createDTO.getTipo());
-                notificacion.setUsuario(usuario); // Asignamos la relación correctamente
-                
-                // Guardamos
-                return ResponseEntity.ok(notificacionService.guardar(notificacion));
-            })
-            .orElse(ResponseEntity.badRequest().body("Usuario no encontrado"));
+        // 1. Buscamos al usuario
+        Optional<Usuario> usuarioOpt = usuarioService.obtenerPorId(createDTO.getUsuario_id());
+        
+        // 2. Verificamos si existe
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            
+            // 3. Creamos la entidad
+            Notificacion notificacion = new Notificacion();
+            notificacion.setMensaje(createDTO.getMensaje());
+            notificacion.setTipo(createDTO.getTipo());
+            notificacion.setUsuario(usuario);
+            
+            // 4. Guardamos y devolvemos OK (Devuelve Notificacion)
+            return ResponseEntity.ok(notificacionService.guardar(notificacion));
+        } else {
+            // 5. Si no existe, devolvemos Error (Devuelve String)
+            // Al usar if/else, Java permite devolver '?' (Object) sin problemas
+            return ResponseEntity.badRequest().body("Usuario no encontrado");
+        }
     }
 
     @PutMapping("/{id}/leer")
