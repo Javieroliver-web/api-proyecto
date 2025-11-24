@@ -3,7 +3,7 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects; // Importante
+import java.util.Objects;
 
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,6 +46,16 @@ public class Usuario {
     @JsonIgnore
     private Set<Proyecto> proyectosAsignados = new HashSet<>();
 
+    // *** NUEVO: PROYECTOS FAVORITOS ***
+    @ManyToMany
+    @JoinTable(
+        name = "Proyecto_Favorito",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "proyecto_id")
+    )
+    @JsonIgnore
+    private Set<Proyecto> proyectosFavoritos = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
         name = "Tarea_Asignada",
@@ -78,7 +88,7 @@ public class Usuario {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    @JsonIgnore // Seguridad: No enviar password
+    @JsonIgnore
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
@@ -100,13 +110,17 @@ public class Usuario {
     public Set<Proyecto> getProyectosAsignados() { return proyectosAsignados; }
     public void setProyectosAsignados(Set<Proyecto> proyectosAsignados) { this.proyectosAsignados = proyectosAsignados; }
 
+    // *** NUEVO GETTER/SETTER ***
+    public Set<Proyecto> getProyectosFavoritos() { return proyectosFavoritos; }
+    public void setProyectosFavoritos(Set<Proyecto> proyectosFavoritos) { this.proyectosFavoritos = proyectosFavoritos; }
+
     public Set<Tarea> getTareasAsignadas() { return tareasAsignadas; }
     public void setTareasAsignadas(Set<Tarea> tareasAsignadas) { this.tareasAsignadas = tareasAsignadas; }
 
     public Set<Tarea> getTareasFavoritas() { return tareasFavoritas; }
     public void setTareasFavoritas(Set<Tarea> tareasFavoritas) { this.tareasFavoritas = tareasFavoritas; }
 
-    // --- Identidad (Vital para que los Sets funcionen) ---
+    // --- Identidad ---
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
