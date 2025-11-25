@@ -1,5 +1,6 @@
 package com.sprintix.controller;
 
+import com.sprintix.dto.TareaCreateDTO;
 import com.sprintix.entity.Tarea;
 import com.sprintix.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ public class TareaController {
     @Autowired
     private TareaService tareaService;
 
-    // --- ACTUALIZADO: Soporta ?estado=pendiente ---
     @GetMapping("/proyecto/{proyectoId}")
     public List<Tarea> listarPorProyecto(@PathVariable int proyectoId, 
                                          @RequestParam(required = false) String estado) {
@@ -32,8 +32,13 @@ public class TareaController {
     }
 
     @PostMapping
-    public ResponseEntity<Tarea> crearTarea(@RequestBody Tarea tarea) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(tareaService.guardar(tarea));
+    public ResponseEntity<?> crearTarea(@RequestBody TareaCreateDTO tareaDTO) {
+        try {
+            Tarea nuevaTarea = tareaService.crearDesdeDTO(tareaDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al crear tarea: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
@@ -60,7 +65,6 @@ public class TareaController {
         }
     }
 
-    // --- NUEVO: DESASIGNAR USUARIO ---
     @DeleteMapping("/{id}/asignar/{usuarioId}")
     public ResponseEntity<?> desasignarUsuario(@PathVariable int id, @PathVariable int usuarioId) {
         try {
@@ -93,7 +97,6 @@ public class TareaController {
         }
     }
 
-    // --- NUEVO: ELIMINAR DE FAVORITOS ---
     @DeleteMapping("/{id}/favorito/{usuarioId}")
     public ResponseEntity<?> eliminarDeFavoritos(@PathVariable int id, @PathVariable int usuarioId) {
         try {
