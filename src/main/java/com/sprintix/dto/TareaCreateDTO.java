@@ -1,6 +1,7 @@
 package com.sprintix.dto;
 
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat; // <--- IMPORTANTE: Nueva importación
 
 /**
  * DTO para CREAR una Tarea (recibido por la API desde el cliente)
@@ -13,6 +14,9 @@ public class TareaCreateDTO {
     private String titulo;
     private String descripcion;
     private String estado;
+
+    // --- CORRECCIÓN: Añadimos el patrón para aceptar fechas tipo "2025-11-25" ---
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fecha_limite;
     
     // ID del proyecto al que se debe asignar
