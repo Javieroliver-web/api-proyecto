@@ -3,10 +3,9 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Objects;
 
 import jakarta.persistence.*; 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore; // IMPORTANTE
 
 @Entity
 @Table(name = "Tarea")
@@ -30,13 +29,15 @@ public class Tarea {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id", nullable = false)
-    @JsonIgnore // Cortamos el bucle aquí
+    @JsonIgnore // <--- ESTA ES LA LÍNEA QUE SOLUCIONA EL ERROR 500
     private Proyecto proyecto;
 
     @ManyToMany(mappedBy = "tareasAsignadas")
+    @JsonIgnore // También es buena práctica ignorar esto para no cargar usuarios innecesariamente
     private Set<Usuario> usuariosAsignados = new HashSet<>();
 
     @ManyToMany(mappedBy = "tareasFavoritas")
+    @JsonIgnore
     private Set<Usuario> usuariosFavoritos = new HashSet<>();
 
     public Tarea() {}
@@ -66,7 +67,7 @@ public class Tarea {
     public Set<Usuario> getUsuariosFavoritos() { return usuariosFavoritos; }
     public void setUsuariosFavoritos(Set<Usuario> usuariosFavoritos) { this.usuariosFavoritos = usuariosFavoritos; }
 
-    // --- Helpers ---
+    // --- Helpers para Relaciones ---
     public void addUsuarioAsignado(Usuario usuario) {
         this.usuariosAsignados.add(usuario);
         usuario.getTareasAsignadas().add(this);
@@ -82,19 +83,5 @@ public class Tarea {
     public void removeUsuarioFavorito(Usuario usuario) {
         this.usuariosFavoritos.remove(usuario);
         usuario.getTareasFavoritas().remove(this);
-    }
-
-    // --- Identidad ---
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tarea tarea = (Tarea) o;
-        return id != 0 && id == tarea.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }
