@@ -1,15 +1,15 @@
 type: collection.insomnia.rest/5.0
 name: CRUD Sprintix
 meta:
-  id: wrk_9c8bb20c65b54897b17ea3ad2d316617
-  created: 1762936786617
-  modified: 1762936786617
+  id: wrk_abebd032f2a04922aa20cd4df99f4da0
+  created: 1764072641975
+  modified: 1764072641975
   description: ""
 collection:
   - url: localhost:8080/api/auth/register
     name: Añadir nuevo usuario
     meta:
-      id: req_a12400425aff4f86a5a2c46bbc85c3ff
+      id: req_b114ef5d49994069bd8df7a5a1fc8631
       created: 1762601251058
       modified: 1763453459230
       isPrivate: false
@@ -41,7 +41,7 @@ collection:
   - url: localhost:8080/api/usuarios
     name: Obtener usuarios
     meta:
-      id: req_94a9915c6b254ed0b18e97306436c0c4
+      id: req_eb7a5d878a1b4b68a656e4a0f42f8b58
       created: 1762801305481
       modified: 1763453441807
       isPrivate: false
@@ -62,7 +62,7 @@ collection:
   - url: http://localhost:8080/api/auth/login
     name: Añadir datos con login
     meta:
-      id: req_451c5bf29da14ef79ea42434214f2f28
+      id: req_9f5808e36961473cb29b8148377a0c69
       created: 1762803643676
       modified: 1763453477195
       isPrivate: false
@@ -92,9 +92,9 @@ collection:
   - url: http://localhost:8080/api/proyectos
     name: Añadir proyectos
     meta:
-      id: req_d57b5d64dc62405fae7f10b4198f18fc
+      id: req_03522f6d13a840edb2f0e310dc8c5d6c
       created: 1762803703018
-      modified: 1763453380056
+      modified: 1764072676487
       isPrivate: false
       description: ""
       sortKey: -1762803703018
@@ -117,7 +117,7 @@ collection:
         value: insomnia/12.0.0
     authentication:
       type: bearer
-      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiZW1haWwiOiJ0ZXNUVHRAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY1NjkzLCJleHAiOjE3NjM0NzA0OTN9.jprf5fzNIycvairuHxRQPiWbUSOuKuhe_rJ8VtsQ7V5Za0dSpP160Of8XHXf5uoGAfy1QDMgs-Vne7P_R6HGkQ
+      token: eyJhbGciOiJIUzI1NiJ9.eyJyb2wiOiJ1c3VhcmlvIiwic3ViIjoibHVpc0B0ZXN0LmNvbSIsImlhdCI6MTc2Mzk4OTk2MSwiZXhwIjoxNzY0MDI1OTYxfQ.iD5yR4T1iUWhfx4g46KU_0ER_cHAckmC9kdLXOLBLus
     settings:
       renderRequestBody: true
       encodeUrl: true
@@ -129,7 +129,7 @@ collection:
   - url: http://localhost:8080/api/auth/me
     name: Obtener datos usuario por token
     meta:
-      id: req_5810b92417714537a9b6d94688205a35
+      id: req_9f0f5f1a2a0f4e90874932aca7ad043f
       created: 1762866870570
       modified: 1763453367734
       isPrivate: false
@@ -153,7 +153,7 @@ collection:
   - url: http://localhost:8080/api/proyectos
     name: Obtener proyectos
     meta:
-      id: req_9ea90010c3df4e3abe357608126816ad
+      id: req_8e8ef5beab1e48df98d6b7a94c4f2492
       created: 1762866955025
       modified: 1763453306299
       isPrivate: false
@@ -177,7 +177,7 @@ collection:
   - url: http://localhost:8080/api/proyectos/1
     name: Obtener proyecto de usuario
     meta:
-      id: req_10370d9631364dc481b5240a8ee201a0
+      id: req_9acb06af1c7c4657a5036c16ae4b6350
       created: 1762867008308
       modified: 1763453294675
       isPrivate: false
@@ -201,7 +201,7 @@ collection:
   - url: http://localhost:8080/api/proyectos/1
     name: Actualizar proyecto de usuario
     meta:
-      id: req_7c10829c8eb74671874f868b96fec646
+      id: req_5f93e4000cf2450b84d9740c656b76e6
       created: 1762867070965
       modified: 1763453281122
       isPrivate: false
@@ -234,7 +234,7 @@ collection:
   - url: http://localhost:8080/api/proyectos/1
     name: Eliminar proyecto de usuario
     meta:
-      id: req_efde66f96b02425b92656a56227e1513
+      id: req_0b2c99fc0a7e456893e0a4f396d126a3
       created: 1762867160909
       modified: 1763453258396
       isPrivate: false
@@ -258,9 +258,9 @@ collection:
   - url: http://localhost:8080/api/tareas
     name: Añadir tareas
     meta:
-      id: req_c5697d2cb4354433b31efc4fece081d7
+      id: req_0208fd0b255044db8838633451ea4a7f
       created: 1762867298724
-      modified: 1763453237852
+      modified: 1764072692661
       isPrivate: false
       description: ""
       sortKey: -1762867298724
@@ -281,7 +281,7 @@ collection:
         value: insomnia/12.0.0
     authentication:
       type: bearer
-      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODY2ODUwLCJleHAiOjE3NjM0NzE2NTB9.UgSecUdncTmNmCZvgFIoXc_W9p14ijD3g1HxcRASZvQE96CX8qVHFJuTWMO1KnKGy6m_4SJiDIBg7UIe_gA3Jw
+      token: eyJhbGciOiJIUzI1NiJ9.eyJyb2wiOiJ1c3VhcmlvIiwic3ViIjoibHVpc0B0ZXN0LmNvbSIsImlhdCI6MTc2Mzk4OTk2MSwiZXhwIjoxNzY0MDI1OTYxfQ.iD5yR4T1iUWhfx4g46KU_0ER_cHAckmC9kdLXOLBLus
     settings:
       renderRequestBody: true
       encodeUrl: true
@@ -293,7 +293,7 @@ collection:
   - url: http://localhost:8080/api/tareas/proyecto/1
     name: Obtener tareas de proyecto
     meta:
-      id: req_00e325e806c1485e826b7808fd606428
+      id: req_efd729ad5c444b53bec7063b6495928f
       created: 1762867377404
       modified: 1763453187249
       isPrivate: false
@@ -317,7 +317,7 @@ collection:
   - url: http://localhost:8080/api/tareas/1
     name: Obtener tareas de usuario
     meta:
-      id: req_088b838109d64e86a6424aaa28cf3e8d
+      id: req_5479027327f34929a7a7f9a227985497
       created: 1762867508466
       modified: 1763453174054
       isPrivate: false
@@ -341,7 +341,7 @@ collection:
   - url: http://localhost:8080/api/tareas/1
     name: Actualizar tarea de usuario
     meta:
-      id: req_f7b59a1100cb4145bdbc0f51bba5acc8
+      id: req_3ccf119e6c8647ac8ebfd045a75c5074
       created: 1762867562697
       modified: 1763453150321
       isPrivate: false
@@ -375,7 +375,7 @@ collection:
   - url: http://localhost:8080/api/tareas/4/asignar
     name: Asignar tarea a usuario
     meta:
-      id: req_a89b71dbace74613b6737ea7a3bbca43
+      id: req_214538a804634655b2a47780ee2cb7aa
       created: 1762895226618
       modified: 1763453605217
       isPrivate: false
@@ -389,11 +389,10 @@ collection:
           "usuario_id": 1
         }
     parameters:
-      - id: pair_34e23cc3a2964b9ca54c4ee28f9bae18
-        name: ""
+      - name: ""
         value: ""
-        description: ""
         disabled: false
+        id: pair_34e23cc3a2964b9ca54c4ee28f9bae18
     headers:
       - name: Content-Type
         value: application/json
@@ -413,7 +412,7 @@ collection:
   - url: http://localhost:8080/api/tareas/1/favorito
     name: Añadir tarea a favorito
     meta:
-      id: req_1c8f26b6ccb1449fad91b8446f274d47
+      id: req_555db4e7c983418a9f48a424fefc21ea
       created: 1762896220357
       modified: 1763452808925
       isPrivate: false
@@ -445,7 +444,7 @@ collection:
   - url: http://localhost:8080/api/tareas/usuario/1/asignadas
     name: Obtener tareas asignadas
     meta:
-      id: req_43b6bd54d2d14107ae6544885cfeea37
+      id: req_403a7c834be14f10864718622e5561a1
       created: 1762896302535
       modified: 1763452839420
       isPrivate: false
@@ -469,7 +468,7 @@ collection:
   - url: http://localhost:8080/api/tareas/1
     name: Eliminar tarea
     meta:
-      id: req_47a573479b5f4975810530d63dee1633
+      id: req_b006c98ffb754192bac8d8f2db9e288d
       created: 1762900784533
       modified: 1763452871629
       isPrivate: false
@@ -493,9 +492,9 @@ collection:
   - url: http://localhost:8080/api/notificaciones
     name: Nueva notificación
     meta:
-      id: req_b03b2ac32c3240b6af22b0890f8093a1
+      id: req_a880a730b85546b885fafc6572ec163c
       created: 1762900863409
-      modified: 1763452899902
+      modified: 1764072730914
       isPrivate: false
       description: ""
       sortKey: -1762900863409
@@ -506,7 +505,7 @@ collection:
         {
           "mensaje": "Tu tarea ha sido completada",
           "tipo": "info",
-          "usuario_id": 1
+          "usuario_id": 7
         }
     headers:
       - name: Content-Type
@@ -515,7 +514,7 @@ collection:
         value: insomnia/12.0.0
     authentication:
       type: bearer
-      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1IiwiZW1haWwiOiJjYXJsb3NAdGVzdC5jb20iLCJyb2wiOiJ1c3VhcmlvIiwiaWF0IjoxNzYyODk1NDM2LCJleHAiOjE3NjM1MDAyMzZ9.9Cox9RSoupbdwY9wq99KUNj7N1Ur69L2J2g73AnsscbusVfeLEh4sQOl9906s9kqz_mWlBpE_yAT-1wzBkyHOQ
+      token: eyJhbGciOiJIUzI1NiJ9.eyJyb2wiOiJ1c3VhcmlvIiwic3ViIjoibHVpc0B0ZXN0LmNvbSIsImlhdCI6MTc2Mzk4OTk2MSwiZXhwIjoxNzY0MDI1OTYxfQ.iD5yR4T1iUWhfx4g46KU_0ER_cHAckmC9kdLXOLBLus
     settings:
       renderRequestBody: true
       encodeUrl: true
@@ -527,7 +526,7 @@ collection:
   - url: http://localhost:8080/api/tareas/usuario/1/favoritas
     name: Obtener tareas favoritas
     meta:
-      id: req_7d2c0d5037144d96a69a5b61d58b1ce9
+      id: req_dbf02c7c3dbd4ab8a6ff2c3ee8999964
       created: 1762900893568
       modified: 1763452859477
       isPrivate: false
@@ -548,12 +547,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8080/api/notificaciones/usuario/1/no-leidas
+  - url: http://localhost:8080/api/notificaciones/usuario/7/no-leidas
     name: Notificación de usuario no leida
     meta:
-      id: req_879ff9cfe256431ab1cc7d4a22e94990
+      id: req_ed4d0010ab704cac9c1bd591acdeecf0
       created: 1762901473161
-      modified: 1763452955404
+      modified: 1764072768171
       isPrivate: false
       description: ""
       sortKey: -1762901473161
@@ -575,7 +574,7 @@ collection:
   - url: http://localhost:8080/api/notificaciones/1/leer
     name: Marcar notificación leida
     meta:
-      id: req_55bba1c5e8b64b83a5f255ecbec49a5e
+      id: req_1eaef47c61154ee1815d402a8e8f3123
       created: 1762902080515
       modified: 1763452979127
       isPrivate: false
@@ -599,7 +598,7 @@ collection:
   - url: http://localhost:8080/api/notificaciones/usuario/1/leer-todas
     name: Marcar todas las notificaciones leidas
     meta:
-      id: req_27d048ceafb349ec8922350b696707a4
+      id: req_307f2033bd5045cd8ff73762b11b7fad
       created: 1762902121184
       modified: 1763452998561
       isPrivate: false
@@ -623,7 +622,7 @@ collection:
   - url: http://localhost:8080/api/notificaciones/1
     name: Eliminar notificaciones
     meta:
-      id: req_b4ea802b15ba4315b67d9388e567833b
+      id: req_0a0bab4a51b54bd6b767f2380229d13c
       created: 1762902435024
       modified: 1763453018118
       isPrivate: false
@@ -644,12 +643,12 @@ collection:
         send: true
         store: true
       rebuildPath: true
-  - url: http://localhost:8080/api/notificaciones/usuario/1
+  - url: http://localhost:8080/api/notificaciones/usuario/7
     name: Obtener notificación de usuario
     meta:
-      id: req_630b8e981e53492d8e54d7f591065407
+      id: req_73720e5cb48d4fddbe105de939cf36cc
       created: 1762902693737
-      modified: 1763452924157
+      modified: 1764072756187
       isPrivate: false
       description: ""
       sortKey: -1762901168285
@@ -671,7 +670,7 @@ collection:
   - url: http://localhost:8080/api/archivos
     name: Subir documentos
     meta:
-      id: req_be71506ee828490aa93ed10d934c120d
+      id: req_dd82b67736bd4e37a4f868c727909e17
       created: 1762902870634
       modified: 1763453040218
       isPrivate: false
@@ -708,7 +707,7 @@ collection:
   - url: http://localhost:8080/api/archivos/proyecto/1
     name: Obtener archivos de proyecto
     meta:
-      id: req_270a96557c724743ad2ced5a73f19d25
+      id: req_7306a72d836247feadb61eac8395f07f
       created: 1762903512894
       modified: 1763453063964
       isPrivate: false
@@ -732,7 +731,7 @@ collection:
   - url: http://localhost:8080/api/archivos/usuario/1
     name: Obtener archivos de usuario
     meta:
-      id: req_35422e7c43644e518f88a6e9c3f82c11
+      id: req_a06b15a3976c4a508bbda56b709478f4
       created: 1762903783666
       modified: 1763453092076
       isPrivate: false
@@ -756,7 +755,7 @@ collection:
   - url: http://localhost:8080/api/archivos/1
     name: Eliminar archivos
     meta:
-      id: req_daa5b228af0249eaae2deba2aa671274
+      id: req_8f9f11e405674c36a27683add2837263
       created: 1762903810075
       modified: 1763453108014
       isPrivate: false
@@ -780,7 +779,7 @@ collection:
   - url: http://localhost:8080/api/usuarios/4
     name: Actualizar usuario
     meta:
-      id: req_5bcef8d75a974a3e8e24dae3e9548539
+      id: req_9c247d5bb1044c74ada4b98a1731ab12
       created: 1763453892050
       modified: 1763453975510
       isPrivate: false
@@ -812,7 +811,7 @@ collection:
   - url: http://localhost:8080/api/usuarios/1
     name: Eliminar usuario
     meta:
-      id: req_d7784b465f3e47d0a59e76df9fdc73be
+      id: req_346dd98ca7d940c9941b16db4a0c521a
       created: 1763454006435
       modified: 1763454036535
       isPrivate: false
@@ -833,7 +832,7 @@ collection:
   - url: http://localhost:8080/api/usuarios/1
     name: Obtener usuario por id
     meta:
-      id: req_4865c11c68c64800b0bb59e9246053ac
+      id: req_ec6c5ebfda0a4562891f51feef3691ae
       created: 1763454053419
       modified: 1763454076635
       isPrivate: false
@@ -854,7 +853,7 @@ collection:
   - url: http://localhost:8080/api/auth/logout
     name: Cerrar sesión
     meta:
-      id: req_51badd9eec95492ebef168f6636788c8
+      id: req_56dd6710df8d40dca047e191054f3467
       created: 1763454554404
       modified: 1763454600531
       isPrivate: false
@@ -872,16 +871,163 @@ collection:
         send: true
         store: true
       rebuildPath: true
+  - url: http://localhost:8080/api/usuarios/7/dashboard
+    name: Dashboard Usuario
+    meta:
+      id: req_235bb56f5d6d4e53bd4e6bd1dbd2020f
+      created: 1764074627747
+      modified: 1764074652895
+      isPrivate: false
+      description: ""
+      sortKey: -1764074627747
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/buscar?nombre=web
+    name: Buscar proyectos
+    meta:
+      id: req_3a65c899d7374e9e9ccf62006b28366f
+      created: 1764074671978
+      modified: 1764074683045
+      isPrivate: false
+      description: ""
+      sortKey: -1764074671978
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1/participantes
+    name: Listar participantes
+    meta:
+      id: req_0bc1876e2e4b46f9aa58a131e22a3e8a
+      created: 1764074710371
+      modified: 1764074729530
+      isPrivate: false
+      description: ""
+      sortKey: -1764074710371
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1/participantes
+    name: Añadir participantes
+    meta:
+      id: req_a294140672d54d12b85c56d4a1d69bd5
+      created: 1764074742930
+      modified: 1764074772279
+      isPrivate: false
+      description: ""
+      sortKey: -1764074742930
+    method: POST
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/proyectos/1/participantes/2
+    name: Eliminar participantes
+    meta:
+      id: req_419529b970cd4e89b33b87bf276c28f1
+      created: 1764074782767
+      modified: 1764074795159
+      isPrivate: false
+      description: ""
+      sortKey: -1764074782767
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1/asignar/2
+    name: Designar tarea
+    meta:
+      id: req_be412450ba7a4af29fe2de13ec52d24e
+      created: 1764074810222
+      modified: 1764074823297
+      isPrivate: false
+      description: ""
+      sortKey: -1764074810222
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/api/tareas/1/favorito/1
+    name: Quitar tarea favorita
+    meta:
+      id: req_c463dd2427604aa29311ccea86eb3919
+      created: 1764074838182
+      modified: 1764074851656
+      isPrivate: false
+      description: ""
+      sortKey: -1764074838182
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/12.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_1f1998b258a34b65b54192b5b864e1ee
+    id: jar_bcca3987636547be81de71063059ede7
     created: 1762601245692
     modified: 1762601245692
 environments:
   name: Base Environment
   meta:
-    id: env_bf8cbc438a8e437cb3518c88c52cb158
+    id: env_62b4f8f3fac74c9cb107c819a2886499
     created: 1762424488068
     modified: 1762601245641
     isPrivate: false
