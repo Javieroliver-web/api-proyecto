@@ -3,10 +3,10 @@ package com.sprintix.entity;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.persistence.*; 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonFormat; 
 
 @Entity
 @Table(name = "Tarea")
@@ -24,10 +24,12 @@ public class Tarea {
     private String estado;
     
     @Temporal(TemporalType.TIMESTAMP)
+    // --- CAMBIO A TU FORMATO SOLICITADO ---
+    // La API ahora devolverá las fechas como "28-11-2025"
+    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "UTC")
     private Date fecha_limite;
 
     // --- Relaciones ---
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id", nullable = false)
     @JsonIgnore
@@ -46,35 +48,26 @@ public class Tarea {
     // --- Getters y Setters ---
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
-
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-
     public Date getFecha_limite() { return fecha_limite; }
     public void setFecha_limite(Date fecha_limite) { this.fecha_limite = fecha_limite; }
-
     public Proyecto getProyecto() { return proyecto; }
     public void setProyecto(Proyecto proyecto) { this.proyecto = proyecto; }
-
     public Set<Usuario> getUsuariosAsignados() { return usuariosAsignados; }
     public void setUsuariosAsignados(Set<Usuario> usuariosAsignados) { this.usuariosAsignados = usuariosAsignados; }
-
     public Set<Usuario> getUsuariosFavoritos() { return usuariosFavoritos; }
     public void setUsuariosFavoritos(Set<Usuario> usuariosFavoritos) { this.usuariosFavoritos = usuariosFavoritos; }
 
-    // ✅ NUEVO: Getter virtual para incluir proyecto_id en JSON sin exponer todo el objeto Proyecto
     @JsonProperty("proyecto_id")
     public Integer getProyectoId() {
         return proyecto != null ? proyecto.getId() : null;
     }
 
-    // --- Helpers para Relaciones ---
     public void addUsuarioAsignado(Usuario usuario) {
         this.usuariosAsignados.add(usuario);
         usuario.getTareasAsignadas().add(this);

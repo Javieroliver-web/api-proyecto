@@ -2,7 +2,7 @@ package com.sprintix.dto;
 
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty; // IMPORTANTE
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TareaCreateDTO {
 
@@ -15,7 +15,7 @@ public class TareaCreateDTO {
     @JsonProperty("estado")
     private String estado;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "UTC")
     @JsonProperty("fecha_limite")
     private Date fecha_limite;
 
