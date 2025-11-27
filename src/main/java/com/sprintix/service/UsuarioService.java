@@ -12,8 +12,12 @@ import com.sprintix.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +27,6 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Inyectamos los otros repositorios para el Dashboard
     @Autowired
     private TareaRepository tareaRepository;
     @Autowired
@@ -55,27 +58,45 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    // --- NUEVO: GENERAR DASHBOARD ---
+    // --- CORRECCIÓN DASHBOARD ---
     public DashboardDTO obtenerDashboard(int usuarioId) {
-        // 1. Tareas pendientes (asignadas y que no estén completadas)
-        List<Tarea> tareasAsignadas = tareaRepository.findByUsuariosAsignados_Id(usuarioId);
-        List<Tarea> pendientes = tareasAsignadas.stream()
-                .filter(t -> !"completada".equalsIgnoreCase(t.getEstado()))
-                .collect(Collectors.toList());
-
-        // 2. Proyectos activos (creados por el usuario)
-        List<Proyecto> proyectos = proyectoRepository.findByCreadorId(usuarioId);
         
-        // 3. Notificaciones no leídas
+        // 1. Obtener usuario para acceder a sus proyectos (Creados y Asignados)
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
+        List<Tarea> pendientes = new ArrayList<>();
+        List<Proyecto> misProyectos = new ArrayList<>();
+
+        if (usuario != null) {
+            // Unimos los proyectos creados y en los que participa
+            Set<Proyecto> setProyectos = new HashSet<>();
+            setProyectos.addAll(usuario.getProyectosCreados());
+            setProyectos.addAll(usuario.getProyectosAsignados());
+            
+            misProyectos = new ArrayList<>(setProyectos);
+
+            // 2. Extraemos las tareas de esos proyectos que NO estén completadas
+            pendientes = setProyectos.stream()
+                .flatMap(p -> p.getTareas().stream()) // Obtenemos el stream de tareas de cada proyecto
+                .filter(t -> t.getEstado() == null || !"completada".equalsIgnoreCase(t.getEstado())) // Filtramos estado
+                .sorted((t1, t2) -> {
+                    // Ordenamos por fecha límite (las más urgentes primero)
+                    if (t1.getFecha_limite() == null) return 1;
+                    if (t2.getFecha_limite() == null) return -1;
+                    return t1.getFecha_limite().compareTo(t2.getFecha_limite());
+                })
+                .collect(Collectors.toList());
+        }
+        
+        // 3. Notificaciones no leídas (lógica original)
         List<Notificacion> notificaciones = notificacionRepository.findByUsuarioIdAndLeidaFalse(usuarioId);
 
-        // Construir DTO
+        // Construir DTO con los datos calculados
         return new DashboardDTO(
             pendientes.size(),
-            proyectos.size(),
+            misProyectos.size(),
             notificaciones.size(),
-            proyectos.stream().limit(5).collect(Collectors.toList()), // Últimos 5 proyectos
-            pendientes.stream().limit(5).collect(Collectors.toList()) // Próximas 5 tareas
+            misProyectos.stream().limit(5).collect(Collectors.toList()), // Últimos 5 proyectos
+            pendientes.stream().limit(5).collect(Collectors.toList())    // Próximas 5 tareas de mis proyectos
         );
     }
 }
