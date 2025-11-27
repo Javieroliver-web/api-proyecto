@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.*; 
-import com.fasterxml.jackson.annotation.JsonIgnore; // IMPORTANTE
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "Tarea")
@@ -29,11 +30,11 @@ public class Tarea {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id", nullable = false)
-    @JsonIgnore // <--- ESTA ES LA LÍNEA QUE SOLUCIONA EL ERROR 500
+    @JsonIgnore
     private Proyecto proyecto;
 
     @ManyToMany(mappedBy = "tareasAsignadas")
-    @JsonIgnore // También es buena práctica ignorar esto para no cargar usuarios innecesariamente
+    @JsonIgnore
     private Set<Usuario> usuariosAsignados = new HashSet<>();
 
     @ManyToMany(mappedBy = "tareasFavoritas")
@@ -66,6 +67,12 @@ public class Tarea {
 
     public Set<Usuario> getUsuariosFavoritos() { return usuariosFavoritos; }
     public void setUsuariosFavoritos(Set<Usuario> usuariosFavoritos) { this.usuariosFavoritos = usuariosFavoritos; }
+
+    // ✅ NUEVO: Getter virtual para incluir proyecto_id en JSON sin exponer todo el objeto Proyecto
+    @JsonProperty("proyecto_id")
+    public Integer getProyectoId() {
+        return proyecto != null ? proyecto.getId() : null;
+    }
 
     // --- Helpers para Relaciones ---
     public void addUsuarioAsignado(Usuario usuario) {

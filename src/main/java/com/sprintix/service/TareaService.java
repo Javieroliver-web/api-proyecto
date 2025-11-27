@@ -26,6 +26,9 @@ public class TareaService {
     @Autowired
     private ProyectoRepository proyectoRepository; 
 
+    /**
+     * Crear tarea desde DTO
+     */
     public Tarea crearDesdeDTO(TareaCreateDTO dto) {
         Proyecto proyecto = proyectoRepository.findById(dto.getProyecto_id())
             .orElseThrow(() -> new RuntimeException("Proyecto no encontrado"));
@@ -40,6 +43,18 @@ public class TareaService {
         return tareaRepository.save(tarea);
     }
 
+    /**
+     * ✅ NUEVO: Forzar flush para asegurar persistencia inmediata en BD
+     * Esto garantiza que los cambios se escriben en la base de datos
+     * ANTES de devolver la respuesta al cliente
+     */
+    public void flush() {
+        tareaRepository.flush();
+    }
+
+    /**
+     * Listar tareas por proyecto con filtro opcional de estado
+     */
     public List<Tarea> listarPorProyecto(int proyectoId, String estado) {
         if (estado != null && !estado.isEmpty()) {
             return tareaRepository.findByProyectoIdAndEstado(proyectoId, estado);
@@ -47,18 +62,30 @@ public class TareaService {
         return tareaRepository.findByProyectoId(proyectoId);
     }
 
+    /**
+     * Obtener tarea por ID
+     */
     public Optional<Tarea> obtenerPorId(int id) {
         return tareaRepository.findById(id);
     }
 
+    /**
+     * Guardar o actualizar tarea
+     */
     public Tarea guardar(Tarea tarea) {
         return tareaRepository.save(tarea);
     }
 
+    /**
+     * Eliminar tarea por ID
+     */
     public void eliminar(int id) {
         tareaRepository.deleteById(id);
     }
 
+    /**
+     * Asignar usuario a una tarea
+     */
     public Tarea asignarUsuario(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
@@ -69,6 +96,9 @@ public class TareaService {
         return tareaRepository.save(tarea);
     }
 
+    /**
+     * Desasignar usuario de una tarea
+     */
     public void desasignarUsuario(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
@@ -79,14 +109,23 @@ public class TareaService {
         tareaRepository.save(tarea);
     }
 
+    /**
+     * Listar tareas asignadas a un usuario
+     */
     public List<Tarea> listarAsignadasPorUsuario(int usuarioId) {
         return tareaRepository.findByUsuariosAsignados_Id(usuarioId);
     }
 
+    /**
+     * Listar tareas favoritas de un usuario
+     */
     public List<Tarea> listarFavoritasPorUsuario(int usuarioId) {
         return tareaRepository.findByUsuariosFavoritos_Id(usuarioId);
     }
 
+    /**
+     * Marcar tarea como favorita para un usuario
+     */
     public Tarea marcarComoFavorita(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
@@ -97,6 +136,9 @@ public class TareaService {
         return tareaRepository.save(tarea);
     }
 
+    /**
+     * Eliminar tarea de favoritos de un usuario
+     */
     public void eliminarDeFavoritos(int tareaId, int usuarioId) {
         Tarea tarea = tareaRepository.findById(tareaId)
             .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));

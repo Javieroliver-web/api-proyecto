@@ -14,6 +14,6 @@ public interface TareaRepository extends JpaRepository<Tarea, Integer> {
 
     List<Tarea> findByUsuariosFavoritos_Id(int usuarioId);
 
-    // --- NUEVO: Filtrar tareas de un proyecto por estado ---
+    // Filtrar tareas de un proyecto por estado
     List<Tarea> findByProyectoIdAndEstado(int proyectoId, String estado);
 }

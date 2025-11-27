@@ -31,12 +31,24 @@ public class TareaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // ✅ ACTUALIZADO: Ahora devuelve la tarea creada y fuerza flush
     @PostMapping
     public ResponseEntity<?> crearTarea(@RequestBody TareaCreateDTO tareaDTO) {
         try {
+            System.out.println("🔵 [BACKEND] Creando tarea: " + tareaDTO.getTitulo());
+            
             Tarea nuevaTarea = tareaService.crearDesdeDTO(tareaDTO);
+            
+            // ✅ FORZAR FLUSH para asegurar persistencia inmediata en BD
+            tareaService.flush();
+            
+            System.out.println("✅ [BACKEND] Tarea creada con ID: " + nuevaTarea.getId());
+            
+            // ✅ DEVOLVEMOS LA TAREA COMPLETA (incluyendo el ID generado)
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
         } catch (Exception e) {
+            System.err.println("❌ [BACKEND] Error al crear tarea: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.badRequest().body("Error al crear tarea: " + e.getMessage());
         }
     }
