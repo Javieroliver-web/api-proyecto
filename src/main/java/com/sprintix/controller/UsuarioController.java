@@ -28,7 +28,7 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // --- NUEVO: ENDPOINT DASHBOARD ---
+    // --- DASHBOARD ---
     @GetMapping("/{id}/dashboard")
     public ResponseEntity<DashboardDTO> obtenerDashboard(@PathVariable int id) {
         try {
@@ -44,15 +44,30 @@ public class UsuarioController {
         return usuarioService.guardar(usuario);
     }
 
+    // --- CORRECCIÓN AQUÍ ---
+    // Validación de nulos para permitir actualizaciones parciales (ej: solo cambiar rol)
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizar(@PathVariable int id, @RequestBody Usuario usuarioDetalles) {
         return usuarioService.obtenerPorId(id).map(usuario -> {
-            usuario.setNombre(usuarioDetalles.getNombre());
-            usuario.setApellido(usuarioDetalles.getApellido());
-            usuario.setEmail(usuarioDetalles.getEmail());
-            if(usuarioDetalles.getRol() != null) {
+            
+            if (usuarioDetalles.getNombre() != null) {
+                usuario.setNombre(usuarioDetalles.getNombre());
+            }
+            if (usuarioDetalles.getApellido() != null) {
+                usuario.setApellido(usuarioDetalles.getApellido());
+            }
+            if (usuarioDetalles.getEmail() != null) {
+                usuario.setEmail(usuarioDetalles.getEmail());
+            }
+            if (usuarioDetalles.getRol() != null) {
                 usuario.setRol(usuarioDetalles.getRol());
             }
+            if (usuarioDetalles.getAvatar() != null) {
+                usuario.setAvatar(usuarioDetalles.getAvatar());
+            }
+            // La contraseña usualmente se maneja en un endpoint separado o con lógica de hash,
+            // por seguridad no se actualiza aquí si viene nula o vacía.
+
             return ResponseEntity.ok(usuarioService.guardar(usuario));
         }).orElse(ResponseEntity.notFound().build());
     }

@@ -33,7 +33,6 @@ public class ProyectoController {
         return proyectoService.listarTodos();
     }
 
-    // --- NUEVO: BUSCAR PROYECTOS ---
     @GetMapping("/buscar")
     public List<Proyecto> buscar(@RequestParam String nombre) {
         return proyectoService.buscarPorNombre(nombre);
@@ -67,19 +66,33 @@ public class ProyectoController {
         }
     }
 
+    // --- CORRECCIÓN AQUÍ ---
+    // Validación de nulos para permitir actualizaciones parciales
     @PutMapping("/{id}")
     public ResponseEntity<Proyecto> actualizar(@PathVariable int id, @RequestBody Proyecto proyectoDetalles) {
         return proyectoService.obtenerPorId(id).map(proyecto -> {
-            proyecto.setNombre(proyectoDetalles.getNombre());
-            proyecto.setDescripcion(proyectoDetalles.getDescripcion());
-            proyecto.setFecha_inicio(proyectoDetalles.getFecha_inicio());
-            proyecto.setFecha_fin(proyectoDetalles.getFecha_fin());
-            proyecto.setEstado(proyectoDetalles.getEstado());
+            
+            if (proyectoDetalles.getNombre() != null) {
+                proyecto.setNombre(proyectoDetalles.getNombre());
+            }
+            if (proyectoDetalles.getDescripcion() != null) {
+                proyecto.setDescripcion(proyectoDetalles.getDescripcion());
+            }
+            if (proyectoDetalles.getFecha_inicio() != null) {
+                proyecto.setFecha_inicio(proyectoDetalles.getFecha_inicio());
+            }
+            if (proyectoDetalles.getFecha_fin() != null) {
+                proyecto.setFecha_fin(proyectoDetalles.getFecha_fin());
+            }
+            if (proyectoDetalles.getEstado() != null) {
+                proyecto.setEstado(proyectoDetalles.getEstado());
+            }
+            
             return ResponseEntity.ok(proyectoService.guardar(proyecto));
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- NUEVOS ENDPOINTS: PARTICIPANTES ---
+    // --- PARTICIPANTES ---
 
     @GetMapping("/{id}/participantes")
     public ResponseEntity<Set<Usuario>> listarParticipantes(@PathVariable int id) {
