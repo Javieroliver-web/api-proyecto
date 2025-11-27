@@ -1,18 +1,25 @@
 package com.sprintix.dto;
 
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat; // IMPORTANTE
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty; // IMPORTANTE
 
 public class TareaCreateDTO {
 
+    @JsonProperty("titulo")
     private String titulo;
+
+    @JsonProperty("descripcion")
     private String descripcion;
+
+    @JsonProperty("estado")
     private String estado;
 
-    // Corrección para evitar el error "Datos inválidos"
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonProperty("fecha_limite")
     private Date fecha_limite;
 
+    @JsonProperty("proyecto_id")
     private int proyecto_id;
 
     // --- Getters y Setters ---

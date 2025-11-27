@@ -31,35 +31,39 @@ public class TareaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // ✅ ACTUALIZADO: Ahora devuelve la tarea creada y fuerza flush
     @PostMapping
     public ResponseEntity<?> crearTarea(@RequestBody TareaCreateDTO tareaDTO) {
         try {
-            System.out.println("🔵 [BACKEND] Creando tarea: " + tareaDTO.getTitulo());
-            
             Tarea nuevaTarea = tareaService.crearDesdeDTO(tareaDTO);
-            
-            // ✅ FORZAR FLUSH para asegurar persistencia inmediata en BD
             tareaService.flush();
-            
-            System.out.println("✅ [BACKEND] Tarea creada con ID: " + nuevaTarea.getId());
-            
-            // ✅ DEVOLVEMOS LA TAREA COMPLETA (incluyendo el ID generado)
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevaTarea);
         } catch (Exception e) {
-            System.err.println("❌ [BACKEND] Error al crear tarea: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Error al crear tarea: " + e.getMessage());
         }
     }
 
+    // --- CORRECCIÓN AQUÍ ---
+    // Antes: Sobrescribía todo con lo que llegaba (incluyendo nulos).
+    // Ahora: Solo actualiza los campos que vienen en el JSON.
     @PutMapping("/{id}")
     public ResponseEntity<Tarea> actualizar(@PathVariable int id, @RequestBody Tarea tareaDetalles) {
         return tareaService.obtenerPorId(id).map(tarea -> {
-            tarea.setTitulo(tareaDetalles.getTitulo());
-            tarea.setDescripcion(tareaDetalles.getDescripcion());
-            tarea.setEstado(tareaDetalles.getEstado());
-            tarea.setFecha_limite(tareaDetalles.getFecha_limite());
+            
+            // Validamos cada campo antes de sobrescribirlo
+            if (tareaDetalles.getTitulo() != null) {
+                tarea.setTitulo(tareaDetalles.getTitulo());
+            }
+            if (tareaDetalles.getDescripcion() != null) {
+                tarea.setDescripcion(tareaDetalles.getDescripcion());
+            }
+            if (tareaDetalles.getEstado() != null) {
+                tarea.setEstado(tareaDetalles.getEstado());
+            }
+            if (tareaDetalles.getFecha_limite() != null) {
+                tarea.setFecha_limite(tareaDetalles.getFecha_limite());
+            }
+            
             return ResponseEntity.ok(tareaService.guardar(tarea));
         }).orElse(ResponseEntity.notFound().build());
     }
